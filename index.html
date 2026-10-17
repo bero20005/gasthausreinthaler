@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gasthaus Reinthaler</title>
+  <meta name="description" content="Gasthaus Reinthaler – traditionelle Wiener Küche seit 1977 in der Gluckgasse 5, 1010 Wien. Wiener Schnitzel, Tafelspitz und tägliches Mittagsmenü.">
+
+  <!-- Google Fonts: "Playfair Display" (classic serif headings) + "Source Sans 3" (readable body text) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <!-- Tailwind config: brand colors + fonts become classes like bg-brand, text-chestnut, font-display.
+       (This must stay here in the HTML, right after the Tailwind script.) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand:      '#8C5A32', // rich warm brown: buttons, highlights
+            'brand-dark':'#6F4626', // brown on hover
+            chestnut:   '#3E2723', // deep chestnut: headings, dark timber
+            body:       '#5A4A42', // warm dark grey for body text
+            cream:      '#FDFBF7', // page background
+            parchment:  '#F4ECE0', // slightly darker cream for soft fills
+            line:       '#E6DCCD', // thin borders
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', '"Times New Roman"', 'serif'],
+            sans:    ['"Source Sans 3"', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Our own styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR (white, sticky)
+       ============================================================ -->
+  <header id="site-header">
+    <nav class="gutter mx-auto max-w-7xl flex items-center justify-between gap-6 py-3" aria-label="Hauptnavigation">
+
+      <!-- Text logo (letters only, no image needed) -->
+      <a href="#top" class="shrink-0 leading-none" aria-label="Gasthaus Reinthaler – zur Startseite">
+        <span class="block text-[10px] font-bold uppercase tracking-[0.32em] text-brand">Gasthaus</span>
+        <span class="mt-1 block font-display text-[27px] font-semibold text-chestnut">Reinthaler</span>
+      </a>
+
+      <!-- Desktop links (4 links only, right-aligned) -->
+      <ul class="hidden md:flex items-center gap-10 text-[15px] font-semibold text-chestnut">
+        <li><a class="nav-link" href="#home">Home</a></li>
+        <li><a class="nav-link" href="#speisekarte">Speisekarte</a></li>
+        <li><a class="nav-link" href="#ueber-uns">Über uns</a></li>
+        <li><a class="nav-link" href="#kontakt">Kontakt</a></li>
+      </ul>
+
+      <!-- Hamburger (phones only) -->
+      <button id="menu-open" type="button"
+              class="md:hidden grid h-11 w-11 place-items-center rounded-full border border-line text-chestnut"
+              aria-label="Menü öffnen" aria-controls="mobile-menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+       MOBILE MENU (full screen, dark timber)
+       ============================================================ -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <div class="gutter flex h-full flex-col py-4 text-cream">
+      <div class="flex items-center justify-between">
+        <span class="leading-none">
+          <span class="block text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C99A6B]">Gasthaus</span>
+          <span class="mt-1 block font-display text-[26px] font-semibold">Reinthaler</span>
+        </span>
+        <button id="menu-close" type="button" class="grid h-11 w-11 place-items-center rounded-full border border-cream/30" aria-label="Menü schließen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <ul class="mt-12 flex flex-col gap-6 font-display text-[2.25rem] leading-tight">
+        <li class="m-link"><a href="#home">Home</a></li>
+        <li class="m-link"><a href="#speisekarte">Speisekarte</a></li>
+        <li class="m-link"><a href="#ueber-uns">Über uns</a></li>
+        <li class="m-link"><a href="#kontakt">Kontakt</a></li>
+      </ul>
+
+      <!-- Contact details at the bottom -->
+      <div class="mt-auto border-t border-cream/15 pt-6 pb-4 text-center text-sm text-cream/75">
+        <p>+43 1 512 33 66</p>
+        <p class="mt-1">Gluckgasse 5, 1010 Wien</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       HERO (cream)
+       ============================================================ -->
+  <main id="top">
+    <section id="home" class="hero relative overflow-hidden">
+
+      <div class="gutter relative mx-auto max-w-7xl grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] pt-12 pb-20 lg:pt-16 lg:pb-24">
+
+        <!-- LEFT: text -->
+        <div class="min-w-0">
+          <!-- Badge -->
+          <p class="hero-badge rise inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.12em] text-chestnut">
+            <span class="h-2 w-2 shrink-0 rounded-full bg-brand ring-2 ring-[#C9A46A]/40" aria-hidden="true"></span>
+            Traditionelle Wiener Küche seit 1977
+          </p>
+
+          <!-- Heading -->
+          <h1 class="rise rise-2 mt-6 font-display font-semibold leading-[1.08] text-chestnut text-[clamp(2.5rem,6.2vw,4.6rem)]">
+            Echte Wiener Gastfreundschaft
+            <em class="font-medium text-brand">im Herzen der Altstadt.</em>
+          </h1>
+
+          <!-- Ornamental divider -->
+          <div class="rise rise-3 mt-7 flex items-center gap-3 text-brand" aria-hidden="true">
+            <span class="h-px w-12 bg-brand/50"></span>
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0l5 5-5 5-5-5z" fill="currentColor"/></svg>
+            <span class="h-px w-12 bg-brand/50"></span>
+          </div>
+
+          <!-- Description -->
+          <p class="rise rise-3 mt-6 max-w-[34rem] text-[18px] leading-relaxed text-body">
+            Klassisches Wiener Schnitzel, Tafelspitz und hausgemachte Hausmannskost –
+            direkt in der Gluckgasse unweit der Albertina.
+          </p>
+
+          <!-- Single call-to-action -->
+          <div class="rise rise-4 mt-9">
+            <a href="#speisekarte" class="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-cream shadow-lg shadow-brand/25 hover:bg-brand-dark transition-colors">
+              Speisekarte ansehen
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <!-- Quick facts -->
+          <dl class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-line pt-8">
+            <div>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.18em] text-body/70">Heute</dt>
+              <dd class="mt-2 flex items-center gap-2 font-semibold text-chestnut">
+                <span class="open-dot inline-block h-2 w-2 rounded-full dot-open"></span>
+                <span class="open-status-short">11:00 – 23:00</span>
+              </dd>
+            </div>
+            <div>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.18em] text-body/70">Warme Küche</dt>
+              <dd class="mt-2 font-semibold text-chestnut">Mo – Fr · 11:30 – 22:00</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.18em] text-body/70">Im Sommer</dt>
+              <dd class="mt-2 font-semibold text-chestnut">Schanigarten in der Gluckgasse</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- RIGHT: feature card with photo -->
+        <div class="relative mx-auto w-full max-w-[440px] lg:max-w-[480px] pr-4 pb-4">
+          <div class="hero-frame-wrap relative">
+            <figure class="hero-frame relative z-10 aspect-square w-full overflow-hidden rounded-md shadow-2xl shadow-chestnut/25">
+
+              <!-- Food photo (hidden automatically if the file is missing) -->
+              <img src="drink/wiener-schnitzel.jpg"
+                   alt="Goldbraun gebackenes Wiener Schnitzel mit Zitrone und Petersilie"
+                   class="hero-photo hide-if-missing absolute inset-0 h-full w-full object-cover"
+                   width="1000" height="1000">
+
+              <!-- Dark gradient at the bottom so the text is always readable -->
+              <div class="hero-photo-overlay absolute inset-0" aria-hidden="true"></div>
+
+              <!-- Top-left badge -->
+              <span class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-cream px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-chestnut shadow-md">
+                <span class="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true"></span>
+                Täglich frisch
+              </span>
+
+              <!-- Bottom text on the dark gradient -->
+              <figcaption class="hero-caption absolute inset-x-0 bottom-0 p-5 sm:p-6 text-white">
+                <span class="inline-block rounded-full bg-brand px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em]">Klassiker</span>
+                <div class="mt-3 flex items-end justify-between gap-4">
+                  <div class="min-w-0">
+                    <p class="font-display text-[1.7rem] font-semibold leading-tight">Original Wiener Schnitzel</p>
+                    <p class="mt-1 text-[15px] text-white/90">Vom Kalb mit gemischtem Salat</p>
+                  </div>
+                  <p class="shrink-0 font-display text-2xl font-semibold tabular-nums">26,40 €</p>
+                </div>
+              </figcaption>
+
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SPEISEKARTE & GETRÄNKEKARTE
+         The 5 photo cards are written below. The dish lists are built by script.js from the MENU data.
+         ============================================================ -->
+    <section id="speisekarte" class="menu-section">
+      <div class="gutter mx-auto max-w-6xl py-20 lg:py-24">
+
+        <!-- Section heading -->
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[12px] font-bold uppercase tracking-[0.2em] text-brand">Speisen &amp; Getränke · Food &amp; Drinks</p>
+          <h2 class="mt-4 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-semibold leading-tight text-chestnut">
+            Unsere <em class="font-medium text-brand">Speisekarte</em>
+          </h2>
+          <div class="mt-5 flex items-center justify-center gap-3 text-brand" aria-hidden="true">
+            <span class="h-px w-12 bg-brand/50"></span>
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0l5 5-5 5-5-5z" fill="currentColor"/></svg>
+            <span class="h-px w-12 bg-brand/50"></span>
+          </div>
+          <p class="mt-5 text-[17px] leading-relaxed text-body">
+            Hausgemachte Wiener Küche, frisch zubereitet. Wählen Sie eine Kategorie,
+            um die Gerichte und Preise zu sehen.
+          </p>
+        </div>
+
+        <!-- ============================================================
+             OVERVIEW: 5 PHOTO CARDS
+             To change a photo, edit the url('…') in "background-image".
+             data-cat must match the id in script.js – don't change it.
+             ============================================================ -->
+        <div id="menu-overview" class="cat-grid mt-12">
+
+          <!-- Card 1: Wiener Speisen -->
+          <button type="button" class="cat-card cat-tone-1" data-cat="wiener-speisen" aria-label="Wiener Speisen ansehen">
+            <span class="cat-bg" style="background-image: url('drink/1349127-960x720-wuerstchengulasch.jpg');" aria-hidden="true"></span>
+            <span class="cat-shade" aria-hidden="true"></span>
+            <span class="cat-text">
+              <span class="cat-en">Viennese main dishes</span>
+              <span class="cat-title">Wiener Speisen</span>
+              <span class="cat-blurb">Schnitzel, Rostbraten &amp; Gebackenes – frisch auf Bestellung</span>
+              <span class="cat-cta">
+                Karte ansehen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+
+          <!-- Card 2: Suppen &amp; Hausmannskost -->
+          <button type="button" class="cat-card cat-tone-2" data-cat="suppen-hausmannskost" aria-label="Suppen und Hausmannskost ansehen">
+            <span class="cat-bg" style="background-image: url('drink/kartoffelsuppe-blogpost-4433.jpg');" aria-hidden="true"></span>
+            <span class="cat-shade" aria-hidden="true"></span>
+            <span class="cat-text">
+              <span class="cat-en">Soups &amp; home-style dishes</span>
+              <span class="cat-title">Suppen &amp; Hausmannskost</span>
+              <span class="cat-blurb">Rindsuppe, Tafelspitz, Schweinsbraten &amp; Gulasch</span>
+              <span class="cat-cta">
+                Karte ansehen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+
+          <!-- Card 3: Österreichische Weine -->
+          <button type="button" class="cat-card cat-tone-3" data-cat="weine" aria-label="Österreichische Weine ansehen">
+            <span class="cat-bg" style="background-image: url('drink/drink.jpg');" aria-hidden="true"></span>
+            <span class="cat-shade" aria-hidden="true"></span>
+            <span class="cat-text">
+              <span class="cat-en">Austrian wines &amp; spritzer</span>
+              <span class="cat-title">Österreichische Weine</span>
+              <span class="cat-blurb">Grüner Veltliner, Zweigelt, Gemischter Satz &amp; Spritzer</span>
+              <span class="cat-cta">
+                Karte ansehen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+
+          <!-- Card 4: Gösser Bier &amp; Getränke -->
+          <button type="button" class="cat-card cat-tone-4" data-cat="bier-getraenke" aria-label="Gösser Bier und Getränke ansehen">
+            <span class="cat-bg" style="background-image: url('drink/Bierlokal-Wien-1.jpg');" aria-hidden="true"></span>
+            <span class="cat-shade" aria-hidden="true"></span>
+            <span class="cat-text">
+              <span class="cat-en">Draught beer, drinks &amp; coffee</span>
+              <span class="cat-title">Gösser Bier &amp; Getränke</span>
+              <span class="cat-blurb">Gösser vom Fass, Aperitifs, Kaffee &amp; Schnaps</span>
+              <span class="cat-cta">
+                Karte ansehen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+
+          <!-- Card 5: Süßspeisen -->
+          <button type="button" class="cat-card cat-tone-5" data-cat="suessspeisen" aria-label="Süßspeisen ansehen">
+            <span class="cat-bg" style="background-image: url('drink/die-10-besten-osterreichischen-susspeisen-d24a953a7dca624f89135b323d7af3b8.jpg');" aria-hidden="true"></span>
+            <span class="cat-shade" aria-hidden="true"></span>
+            <span class="cat-text">
+              <span class="cat-en">Desserts</span>
+              <span class="cat-title">Süßspeisen</span>
+              <span class="cat-blurb">Palatschinken &amp; Schokosoufflé</span>
+              <span class="cat-cta">
+                Karte ansehen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </span>
+          </button>
+
+        </div>
+
+        <!-- Detail: dishes of the chosen category (filled by script.js, hidden at first) -->
+        <div id="menu-detail" class="menu-detail mt-12" aria-live="polite" hidden></div>
+
+        <!-- Note under the menu -->
+        <p class="mt-14 text-center text-sm text-body/80">
+          Alle Preise in Euro. Fragen zu Allergenen beantwortet gerne unser Service-Team.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ÜBER UNS (About us)
+         One centered column: badge, heading, story, then 3 info cards.
+         ============================================================ -->
+    <section id="ueber-uns" class="about-section">
+      <div class="gutter mx-auto max-w-5xl py-20 lg:py-28 text-center">
+
+        <!-- Badge with a thin line on each side -->
+        <p class="inline-flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.2em] text-brand">
+          <span class="h-px w-8 bg-brand/60" aria-hidden="true"></span>
+          Unsere Geschichte
+          <span class="h-px w-8 bg-brand/60" aria-hidden="true"></span>
+        </p>
+
+        <!-- Heading -->
+        <h2 class="mx-auto mt-5 max-w-3xl font-display text-[clamp(2.1rem,4.6vw,3.3rem)] font-semibold leading-[1.12] text-chestnut">
+          Gemütlich, bodenständig &amp; <em class="font-medium text-brand">typisch Wienerisch</em>
+        </h2>
+
+        <!-- Ornamental divider -->
+        <div class="mt-6 flex items-center justify-center gap-3 text-brand" aria-hidden="true">
+          <span class="h-px w-12 bg-brand/50"></span>
+          <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0l5 5-5 5-5-5z" fill="currentColor"/></svg>
+          <span class="h-px w-12 bg-brand/50"></span>
+        </div>
+
+        <!-- Story -->
+        <div class="mx-auto mt-7 max-w-2xl space-y-5 text-[17px] leading-relaxed text-body">
+          <p>
+            Das Gasthaus Reinthaler wird seit 1977 als Familienbetrieb geführt und bietet
+            klassische Wiener Küche im Herzen der Altstadt an – unweit der Kärntner Straße,
+            des Dorotheums und der Albertina.
+          </p>
+          <p>
+            Ob zum täglichen Mittagsmenü oder auf ein kühles Bier im Schanigarten:
+            Bei uns genießen Sie durchgehend warme Küche in gemütlicher Atmosphäre.
+          </p>
+        </div>
+
+        <!-- 3 info cards -->
+        <ul class="about-features mt-14">
+
+          <!-- Card 1: Familienbetrieb -->
+          <li class="about-feature">
+            <span class="about-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg>
+            </span>
+            <h3 class="about-feature-title">Familienbetrieb</h3>
+            <p class="about-feature-text">Echte Wiener Gastfreundschaft.</p>
+          </li>
+
+          <!-- Card 2: Zentrale Lage -->
+          <li class="about-feature">
+            <span class="about-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </span>
+            <h3 class="about-feature-title">Zentrale Lage</h3>
+            <p class="about-feature-text">Gluckgasse 5, nahe der Albertina.</p>
+          </li>
+
+          <!-- Card 3: Durchgehend warme Küche -->
+          <li class="about-feature">
+            <span class="about-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <h3 class="about-feature-title">Durchgehend warme Küche</h3>
+            <p class="about-feature-text">Mo – Fr von 11:30 bis 22:00 Uhr.</p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         KONTAKT & ANFAHRT (dark closing section)
+         Left: contact details + directions. Right: Google Map.
+         ============================================================ -->
+    <section id="kontakt" class="contact-section">
+      <div class="gutter mx-auto max-w-7xl grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch py-20 lg:py-28">
+
+        <!-- LEFT: contact info -->
+        <div class="min-w-0">
+          <!-- Badge -->
+          <p class="inline-flex items-center gap-3 text-[12px] font-bold uppercase tracking-[0.2em] text-[#C9A46A]">
+            <span class="h-px w-8 bg-[#C9A46A]/70" aria-hidden="true"></span>
+            Kontakt
+          </p>
+
+          <!-- Heading + subtitle -->
+          <h2 class="mt-5 font-display text-[clamp(2.1rem,4.6vw,3.2rem)] font-semibold leading-[1.12] text-cream">
+            Kontakt &amp; <em class="font-medium text-[#D9B27C]">Anfahrt</em>
+          </h2>
+          <p class="mt-3 text-[18px] text-cream/75">So finden Sie uns im Herzen von Wien</p>
+
+          <!-- Contact details -->
+          <ul class="contact-list mt-10">
+
+            <!-- Telefon -->
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="contact-label">Telefon</p>
+                <a class="contact-value contact-link" href="tel:+4315123366">+43 1 512 33 66</a>
+              </div>
+            </li>
+
+            <!-- E-Mail -->
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="contact-label">E-Mail</p>
+                <a class="contact-value contact-link" href="mailto:gasthaus.reinthaler@gmx.at">gasthaus.reinthaler@gmx.at</a>
+              </div>
+            </li>
+
+            <!-- Adresse -->
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="contact-label">Adresse</p>
+                <p class="contact-value">Gluckgasse 5, 1010 Wien, Austria</p>
+              </div>
+            </li>
+
+            <!-- Öffnungszeiten -->
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <div class="min-w-0">
+                <p class="contact-label">Öffnungszeiten</p>
+                <p class="contact-value">Mo – Fr 11:00 – 23:00 Uhr</p>
+                <p class="contact-note">Warme Küche 11:30 – 22:00 · an Feiertagen geschlossen</p>
+              </div>
+            </li>
+
+          </ul>
+
+          <!-- Directions -->
+          <div class="contact-directions mt-10">
+            <h3 class="font-display text-[1.25rem] font-semibold text-cream">Anfahrtsbeschreibung</h3>
+            <p class="mt-3 max-w-[34rem] text-[16px] leading-relaxed text-cream/75">
+              Unser Gasthaus liegt mitten im 1. Bezirk – nur wenige Schritte von der Kärntner Straße,
+              dem Dorotheum und der Albertina entfernt. Mit den öffentlichen Verkehrsmitteln sind wir
+              bequem erreichbar: Die U-Bahn-Stationen Stephansplatz (U1, U3) und Karlsplatz
+              (U1, U2, U4) liegen nur wenige Gehminuten entfernt.
+            </p>
+          </div>
+
+          <!-- Google Maps button -->
+          <a href="https://maps.app.goo.gl/T4RX25jJbSUUmv1D7" target="_blank" rel="noopener"
+             class="contact-btn mt-9">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            In Google Maps öffnen
+          </a>
+        </div>
+
+        <!-- RIGHT: embedded Google Map -->
+        <div class="contact-map min-w-0">
+          <iframe
+            src="https://www.google.com/maps?q=Gluckgasse+5,+1010+Wien&z=16&output=embed"
+            title="Karte: Gasthaus Reinthaler, Gluckgasse 5, 1010 Wien"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+
+      </div>
+
+      <!-- Footer line at the very bottom -->
+      <div class="contact-footer">
+        <div class="gutter mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-3 py-6 text-[14px] text-cream/60">
+          <p>© <span id="year">2026</span> Gasthaus Reinthaler · Gluckgasse 5 · 1010 Wien</p>
+          <a href="#top" class="inline-flex items-center gap-2 hover:text-cream transition-colors">
+            Nach oben
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Our JavaScript (at the end so the HTML above is ready) -->
+  <script src="script.js"></script>
+</body>
+</html>
